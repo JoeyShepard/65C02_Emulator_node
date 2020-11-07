@@ -4,12 +4,7 @@
 //*NODE SPECIFIC*
 //***************
 
-var debugBufferState="normal";
-var debugString="";
-var debugBold=false;
-var debugItalics=false;
-var debugColor="white";
-var debugRespan=false;
+var run_start=false;	//whether to emulating immediately on load
 
 //color - https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
 function print(msg,format="none",width=0)
@@ -248,6 +243,9 @@ function PrintRegs()
 	}	
 }
 
+//********************
+//*MAIN EMULATOR CODE*
+//********************
 
 //***********
 //*CONSTANTS*
@@ -359,6 +357,13 @@ var cycleLogActivated=false;
 
 var cycleGen=cycle10_6();
 
+var debugBufferState="normal";
+var debugString="";
+var debugBold=false;
+var debugItalics=false;
+var debugColor="white";
+var debugRespan=false;
+
 //***********
 //*MAIN CODE*
 //***********
@@ -432,7 +437,7 @@ function recordCycle()
 //*SETUP FUNCTION*
 //****************
 
-function setup(path,list_style)
+function setup()
 {
 	print("65C02 emulator - node.js\n");
 	print("Ctrl+r to start/stop\n");
@@ -448,6 +453,14 @@ function setup(path,list_style)
 	process.stdin.on('keypress', key_handler);
 	
 	//GraphicsDirty=false;
+	
+	start here
+	
+	//if (process.argv[2]=="run") 
+	//{
+	//	running=1;
+	//	cycleFunc();
+	//}
 }
 
 
