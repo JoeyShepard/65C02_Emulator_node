@@ -1,0 +1,14 @@
+{
+  "name": "emu",
+  "version": "1.0.0",
+  "description": "node.js port of 65C02 emulator",
+  "main": "bin/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joey Shepard",
+  "license": "ISC",
+  "bin": {
+   "emu": "./bin/index.js"
+ }
+}
