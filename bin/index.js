@@ -4,7 +4,8 @@
 //*NODE SPECIFIC*
 //***************
 
-var run_start=false;	//whether to emulating immediately on load
+var run_start=false;	//whether to start emulating immediately on load
+var start_time;			//timing to calculate simulated clock speed
 
 //color - https://stackoverflow.com/questions/9781218/how-to-change-node-jss-console-font-color
 function print(msg,format="none",width=0)
@@ -364,13 +365,6 @@ var debugItalics=false;
 var debugColor="white";
 var debugRespan=false;
 
-//***********
-//*MAIN CODE*
-//***********
-
-setup();
-
-
 //**********************************
 //*FUNCTIONS FOR RUNNING CPU CYCLES*
 //**********************************
@@ -439,12 +433,17 @@ function recordCycle()
 
 function setup()
 {
-	print("65C02 emulator - node.js\n");
-	print("Ctrl+r to start/stop\n");
+	if (process.argv[2]=="run") run_start=true;
 	
-	LoadFiles();
-	PrintRegs();
-
+	if (!run_start)
+	{
+		print("65C02 emulator - node.js\n");
+		print("Ctrl+r to start/stop\n");
+		LoadFiles();
+		PrintRegs();
+	}
+	else LoadFiles();
+	
 	//Key reading
 	//https://thisdavej.com/making-interactive-node-js-console-apps-that-listen-for-keypress-events/
 	const readline = require('readline');
@@ -453,14 +452,14 @@ function setup()
 	process.stdin.on('keypress', key_handler);
 	
 	//GraphicsDirty=false;
+
+	start_time=process.hrtime.bigint();
 	
-	start here
-	
-	//if (process.argv[2]=="run") 
-	//{
-	//	running=1;
-	//	cycleFunc();
-	//}
+	if (run_start)
+	{
+		running=1;
+		cycleFunc();
+	}
 }
 
 
@@ -630,6 +629,10 @@ function peripheral(data)
 			//	self.postMessage({cmd:"bell"});
 			//	break;
 			case NODE_EXIT:
+				let total_time=process.hrtime.bigint()-start_time;
+				if (total_time==BigInt(0)) total_time=BigInt(1);
+				
+				print("\n"+cycle_count.toLocaleString()+" cycles, "+Number(total_time/BigInt("1000000")).toLocaleString()+"ms ("+(Number(BigInt(cycle_count)*BigInt("100000")/total_time)/100).toFixed(2)+"MHz)\n");
 				process.exit();
 				break;
 		}
@@ -2201,4 +2204,10 @@ function disassemble(byteList)
 	return ret_str;
 }
 
+
+//***********
+//*MAIN CODE*
+//***********
+
+setup();
 
