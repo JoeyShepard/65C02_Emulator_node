@@ -203,9 +203,9 @@ function LoadFiles()
 	//Set PC to reset vector
 	PC=mem[0xFFFC]+(mem[0xFFFD]<<8);
 	
-	inputBuffer=fs.readFileSync(__dirname+'\\..\\input.txt', 'utf8')
+	//inputBuffer=fs.readFileSync(__dirname+'\\..\\input.txt', 'utf8')
+	inputBuffer=fs.readFileSync('Z:\\input.txt', 'utf8')
 	//https://stackoverflow.com/questions/25110983/node-reading-file-in-specified-chunk-size
-	
 	
 }
 
