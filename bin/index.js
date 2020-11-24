@@ -336,7 +336,9 @@ var RomBank=BANK_SIZE*3;	//Point to 0xC000-0xFFFF on startup
 //Variant 3							67mhz
 //var mem=new Array(0x40000);
 //Variant 4							69mhz (65mhz with banking)
-var mem=new Array(0x40000).fill(0);	
+//var mem=new Array(0x40000).fill(0);	
+//Variant 5
+var mem=new Uint8Array(0x40000);
 var running=0;
 var cycle_count=0;
 var cycle_penalty=0;
